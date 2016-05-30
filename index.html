@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head> 
+    <meta charset="utf-8" />
+    <title>CANDY CRUNCH</title>
+    <link rel="stylesheet" type="text/css" href="style.css">
+    <script src="phaser.js"></script>
+    <script src="Boot.js"></script>
+    <script src="Preloader.js"></script>
+    <script src="MainMenu.js"></script>
+    <script src="GroundFloor.js"></script>
+    <script src="LevelOne.js"></script>
+    <script src="LevelTwo.js"></script>
+    <script src="LevelThree.js"></script>
+    <script src="Basement.js"></script>
+    <script src="GlobalSaves.js"></script>
+    <script src="Juicy.js"></script>
+    <script src="Shake.js"></script>
+    <script src="jquery-1.12.3.js"></script>
+    
+    
+</head> 
+<body> 
+	<body bgcolor="#FF69B4">
+    <div id="content"/>
+</body>
+</body>
+    <div id = "sideBar"><img src="assets/image/sideBar.png"></div>
+    <br>
+
+<div id = "gameContainer"></div>
+
+<script type = "text/javascript">
+    var game = new Phaser.Game(1000, 720, Phaser.AUTO, 'gameContainer');
+
+    window.onload = function(){
+    
+        game.state.add('Boot', SmashSpace.Boot);
+        game.state.add('Preloader', SmashSpace.Preloader);
+        game.state.add('MainMenu', SmashSpace.MainMenu);
+        game.state.add('GroundFloor', SmashSpace.GroundFloor);
+        game.state.add('LevelOne', SmashSpace.LevelOne);
+        game.state.add('LevelTwo', SmashSpace.LevelTwo);
+        game.state.add('LevelThree', SmashSpace.LevelThree);
+        game.state.add('Basement', SmashSpace.Basement);
+        
+        game.state.start('Boot');
+    
+    }
+    function myFunction() {
+        if(game.state.current == 'MainMenu'){
+        var t = document.createTextNode("This is a main menu.");
+        document.body.appendChild(t);
+        }
+        if(game.state.current == 'GroundFloor'){
+        var t = document.createTextNode("This is the ground floor.");
+        document.body.appendChild(t);
+        }
+        if(game.state.current == 'LevelOne'){
+        var t = document.createTextNode("This is level one.");
+        document.body.appendChild(t);
+        }
+        if(game.state.current == 'LevelTwo'){
+        var t = document.createTextNode("This is level two.");
+        document.body.appendChild(t);
+        }
+        if(game.state.current == 'LevelThree'){
+        var t = document.createTextNode("This is level three.");
+        document.body.appendChild(t);
+        }
+        if(game.state.current == 'Basement'){
+        var t = document.createTextNode("This is the basement.");
+        document.body.appendChild(t);
+        }
+       }
+
+</script> 
+    
+    <!--<div align = "center"><button onclick="myFunction()">Dev Comments</button>
+    <p id="demo"></p>
+</div>-->
+
+   
+    <script>
+       
+
+    </script>
+</html>  
+<body>    
+    
+        <div id = "login"><img src="assets/image/login.png"></div>
+
+
+
+</body>
