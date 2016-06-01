@@ -44,7 +44,6 @@ SmashSpace.Preloader.prototype = {
         
         //level2
         this.load.image('l2BG', 'assets/image/level2BG.png');
-        //this.load.image('l2pipes', 'assets/image/level2Pipes.png');
         this.load.image('handl1', 'assets/image/level2Handle1.png');
         this.load.image('handl2', 'assets/image/level2Handle2.png');
         this.load.image('handl3', 'assets/image/level2Handle3.png');
@@ -87,6 +86,7 @@ SmashSpace.Preloader.prototype = {
         this.load.image('topBar', 'assets/image/topBar.png');
         this.load.spritesheet('button', 'assets/image/button.png', 243, 103);
         this.load.image('scoreBack', 'assets/image/scoreBack.png');
+        this.load.image('sign', 'assets/image/sign.png');
         
         this.load.image('pause', 'assets/image/pause.png');
         this.load.image('tut', 'assets/image/how.png');

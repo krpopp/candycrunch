@@ -12,11 +12,8 @@
     <script src="LevelOne.js"></script>
     <script src="LevelTwo.js"></script>
     <script src="LevelThree.js"></script>
-    <script src="Basement.js"></script>
     <script src="GlobalSaves.js"></script>
-    <script src="Juicy.js"></script>
     <script src="Shake.js"></script>
-    <script src="jquery-1.12.3.js"></script>
     
     
 </head> 
@@ -42,44 +39,13 @@
         game.state.add('LevelOne', SmashSpace.LevelOne);
         game.state.add('LevelTwo', SmashSpace.LevelTwo);
         game.state.add('LevelThree', SmashSpace.LevelThree);
-        game.state.add('Basement', SmashSpace.Basement);
         
         game.state.start('Boot');
     
     }
-    function myFunction() {
-        if(game.state.current == 'MainMenu'){
-        var t = document.createTextNode("This is a main menu.");
-        document.body.appendChild(t);
-        }
-        if(game.state.current == 'GroundFloor'){
-        var t = document.createTextNode("This is the ground floor.");
-        document.body.appendChild(t);
-        }
-        if(game.state.current == 'LevelOne'){
-        var t = document.createTextNode("This is level one.");
-        document.body.appendChild(t);
-        }
-        if(game.state.current == 'LevelTwo'){
-        var t = document.createTextNode("This is level two.");
-        document.body.appendChild(t);
-        }
-        if(game.state.current == 'LevelThree'){
-        var t = document.createTextNode("This is level three.");
-        document.body.appendChild(t);
-        }
-        if(game.state.current == 'Basement'){
-        var t = document.createTextNode("This is the basement.");
-        document.body.appendChild(t);
-        }
-       }
+
 
 </script> 
-    
-    <!--<div align = "center"><button onclick="myFunction()">Dev Comments</button>
-    <p id="demo"></p>
-</div>-->
-
    
     <script>
        

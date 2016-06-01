@@ -24,16 +24,13 @@ SmashSpace.GroundFloor = function (game){
 };
 
 SmashSpace.GroundFloor.prototype = {
-
-    //var cursor;
-   // var isPressed = false;
     
     create: function () {
         
     var me = this;
         
         
-        
+    
     me.shake = new Phaser.Plugin.Shake(me);
     game.plugins.add(me.shake);    
         
@@ -48,7 +45,6 @@ SmashSpace.GroundFloor.prototype = {
         
     me.gridTotal = 1;
     me.tileNum = 0;
-    //me.juicy = me.game.plugins.add(Phaser.Plugin.Juicy);
         
     me.world.setBounds(-500, -500, 1920, 1920);
     me.game.stage.backgroundColor = "ffffff";
@@ -74,6 +70,7 @@ SmashSpace.GroundFloor.prototype = {
     me.emptyGrid = me.add.sprite(-30, -18, 'emptyGrid');
     me.emptyBar = me.add.sprite(-218, 42, 'emptyBar');
     me.powerBar = me.add.sprite(-166, 435, 'powerBar');
+    me.sign = me.add.sprite(590, 250, 'sign');
     me.door = me.add.sprite(590, 310, 'door'); 
     me.UIbottom = me.add.sprite(-315, 465, 'UIbottom');
     me.pauseButt = me.add.button(-240, 470, 'button', me.pause, this, 1, 0, 2);
@@ -97,25 +94,18 @@ SmashSpace.GroundFloor.prototype = {
          
     me.powerBar.anchor.setTo(0.5, 1);    
         
-    //Keep track of the users score
     me.score = 0;
  
-    //Keep track of the tiles the user is trying to swap (if any)
     me.activeTile1 = null;
     me.activeTile2 = null;
  
-    //Controls whether the player can make a move or not
     me.canMove = false;
  
-    //Grab the weigh and height of the tiles (assumes same size for all tiles)
     me.tileWidth = me.game.cache.getImage('blue').width;
     me.tileHeight = me.game.cache.getImage('blue').height;
  
-    //This will hold all of the tile sprites
     me.tiles = me.game.add.group();
  
-    //Initialise tile grid, this array will hold the positions of the tiles
-    //Create whatever shape you'd like
     me.tileGrid = [
         [null, null, null, null, null],
         [null, null, null, null, null],
@@ -127,11 +117,14 @@ SmashSpace.GroundFloor.prototype = {
     me.startGrid = [0, 1, 0, 2, 3, 2, 2, 3, 1, 0, 1, 0, 0, 2, 3, 3, 3, 2, 1, 0, 0, 2, 3, 2, 0];
     me.startTileNum = 0;
  
-    //Create a random data generator to use later
     var seed = Date.now();
     me.random = new Phaser.RandomDataGenerator([seed]);
 
-    me.initFirstTiles();
+    if(!gridHasSaved){
+        me.initFirstTiles();
+    } else if(gridHasSaved){
+        me.initTiles();
+    }
 
         
     me.centerPoint = me.add.sprite(185, 220, null);
@@ -144,10 +137,6 @@ SmashSpace.GroundFloor.prototype = {
     me.powerBarInt = 1;          
     me.cropRect = new Phaser.Rectangle(0,0,me.powerBar.width,0);       
     me.powerBar.crop(me.cropRect); 
-    
-       // me.result = "";
-
-   // me.gradNewTiles();
 
   },
     
@@ -158,7 +147,6 @@ SmashSpace.GroundFloor.prototype = {
         pauseScreen.inputEnabled = true;
         game.input.onDown.add(unpause, self);
         function unpause(event){
-            //console.log("in");
             game.paused = false;
             pauseScreen.destroy();
         };
@@ -171,7 +159,6 @@ SmashSpace.GroundFloor.prototype = {
         pauseScreen.inputEnabled = true;
         game.input.onDown.add(unpause, self);
         function unpause(event){
-            //console.log("in");
             game.paused = false;
             pauseScreen.destroy();
         };
@@ -186,7 +173,6 @@ SmashSpace.GroundFloor.prototype = {
         var plus = me.add.sprite(398, 140, 'plus');
         var exOut = me.add.button(-260, -130, 'exOut', unpause, this);
         function unpause(event){
-            console.log("in");
             game.paused = false;
             pauseScreen.destroy();
             downButt.destroy();
@@ -201,7 +187,6 @@ SmashSpace.GroundFloor.prototype = {
     increaseVol: function(){
         var me = this;
         if(me.music.volume < 1){
-            console.log(me.music.volume);
             me.music.volume += 0.1;
         }
     },
@@ -209,7 +194,6 @@ SmashSpace.GroundFloor.prototype = {
     decreaseVol: function(){
         var me = this;
         if(me.music.volume > 0){
-            console.log(me.music.volume);
             me.music.volume -= 0.1;
         }
     },
@@ -249,15 +233,9 @@ SmashSpace.GroundFloor.prototype = {
     var me = this;
        
        
-    //Loop through each column in the grid
     for(var i = 0; i < me.tileGrid.length; i++){
  
-        //Loop through each position in a specific column, starting from the top
         for(var j = 0; j < me.tileGrid.length; j++){
-            //console.log("i is " + i);
-            //console.log("j is " + j);
-            //Add the tile to the game at this grid position
-           // var tile = me.addTile(i, j);
             
                if (me.tileGrid[i][j] == null){
             
@@ -274,8 +252,6 @@ SmashSpace.GroundFloor.prototype = {
     });
        
        
-       
-    //Once the tiles are ready, check for any matches on the grid
     me.game.time.events.add(800, function(){
         me.checkMatch();
     });
@@ -287,15 +263,9 @@ SmashSpace.GroundFloor.prototype = {
     var me = this;
        
        
-    //Loop through each column in the grid
     for(var i = 0; i < me.tileGrid.length; i++){
  
-        //Loop through each position in a specific column, starting from the top
         for(var j = 0; j < me.tileGrid.length; j++){
-            //console.log("i is " + i);
-            //console.log("j is " + j);
-            //Add the tile to the game at this grid position
-           // var tile = me.addTile(i, j);
             
                if (me.tileGrid[i][j] == null){
             
@@ -313,7 +283,6 @@ SmashSpace.GroundFloor.prototype = {
        
        
        
-    //Once the tiles are ready, check for any matches on the grid
     me.game.time.events.add(800, function(){
         me.checkMatch();
     });
@@ -324,9 +293,7 @@ SmashSpace.GroundFloor.prototype = {
         var me = this;
 
         if(gridHasSaved){
-            //console.log("startover");
             me.savedTile = JSON.parse(localStorage.getItem('gridTile' + me.gridTotal));
-            //me.savedTile = parseInt(me.result[me.gridTotal]);
             me.gridTotal++;
             if(me.savedTile == 4){
                 if(premadeBalls <= 0 && finalBallNum > 0){
@@ -345,7 +312,6 @@ SmashSpace.GroundFloor.prototype = {
                 return tile;
             }
         }else{
-            //Choose a random tile to add
             var tileToAdd = me.tileType[me.random.integerInRange(0, me.tileType.length - 1)]; 
             var tile = me.tiles.create((x * me.tileWidth) + me.tileWidth / 2, 0, tileToAdd);
             me.dropTween = me.game.add.tween(tile).to({y:y*me.tileHeight+(me.tileHeight/2)}, me.random.integerInRange(400, 500), Phaser.Easing.Bounce.Out, true);      
@@ -381,22 +347,13 @@ SmashSpace.GroundFloor.prototype = {
         addNewTile: function(x,y){
         var me = this;
         if(finalBallNum > 0){
-            //console.log(finalBallNum);
             me.newTile = JSON.parse(localStorage.getItem('finishedTile' + finalBallNum));
-            //console.log(parseInt(me.result.charAt(me.finalBallNum)));
-            //me.newTile = parseInt(me.result.charAt(me.finalBallNum - 1));
             finalBallNum--;
-            console.log(me.newTile);
             var tileToAdd = me.tileType[me.newTile];
             var tile = me.tiles.create((x * me.tileWidth) + me.tileWidth / 2, 0, tileToAdd);
             me.dropTween = me.game.add.tween(tile).to({y:y*me.tileHeight+(me.tileHeight/2)}, me.random.integerInRange(400, 500), Phaser.Easing.Bounce.Out, true);      
-//                    me.dropTween.onComplete.add(function () {
-//                        me.dropSound.play();
-//                    });
             tile.position.y = (y*me.tileHeight+(me.tileHeight/2));
-                    //Set the tiles anchor point to the center
             tile.anchor.setTo(0.5, 0.5);
-            //Enable input on the tile
             tile.inputEnabled = true;
             tile.tileType = tileToAdd;
             tile.events.onInputDown.add(me.tileDown, this);
@@ -414,10 +371,8 @@ SmashSpace.GroundFloor.prototype = {
         gridHasSaved = true;
         for(var i = 0; i < me.tileGrid.length; i++){
  
-        //Loop through each position in a specific column, starting from the top
         for(var j = 0; j < me.tileGrid.length; j++){
  
-            //Add the tile to the game at this grid position
             var tile = me.tileGrid[i][j];
             var colorInt = 0;
             me.tileNum++;
@@ -439,7 +394,6 @@ SmashSpace.GroundFloor.prototype = {
                colorInt = 4;
            }
         
-            //console.log(colorInt);
             localStorage.setItem('gridTile' + me.tileNum, JSON.stringify(colorInt))
         }
             
@@ -453,51 +407,9 @@ SmashSpace.GroundFloor.prototype = {
     
     changeStateUp: function (){
         var me = this;
-        //console.log(me.tileGrid);
-            me.saveGameGrid();
+        me.saveGameGrid();
         me.music.stop();
         this.state.start('LevelOne');
-    
-//    var xmlhttp;
-//    if (window.XMLHttpRequest)
-//      {
-//      // code for IE7+, Firefox, Chrome, Opera, Safari
-//      xmlhttp=new XMLHttpRequest();
-//      }
-//    else
-//      {
-//      // code for IE6, IE5
-//      xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
-//      }
-//
-////    xmlhttp.onreadystatechange=function()
-////      {
-////      if (xmlhttp.readyState==4 && xmlhttp.status==200)
-////        {
-////        document.getElementById("mytextfiledic").innerHTML=xmlhttp.responseText;
-////        }
-////      }
-//
-//    xmlhttp.open("GET","afp://phaser.magnet.tsoa.nyu.edu/common/data/test.txt",true);
-//        
-//    xmlhttp.onreadystatechange = function() {
-//
-//        if( xmlhttp.readyState == 4 ) {
-//
-//            if( xmlhttp.status >= 200 && xmlhttp.status<300 || xmlhttp.status == 304  ) {
-//                //your text file is downloaded into xhr.responseText
-//                console.log( xmlhttp.responseText.split('\n') );// there you have your array.
-//            }
-//
-//        }
-//
-//    }        
-//        
-//        
-//        
-//    xmlhttp.send();     
-        
-
     },
     
     changeStateDown: function (){
@@ -511,22 +423,17 @@ SmashSpace.GroundFloor.prototype = {
         if(me.canMove){
         me.clickSound.play();
         if(me.activeTile1 != null){
-            //console.log("in");
             me.canMove = false;
             me.activeTile2 = tile;
             me.add.tween(me.activeTile1.scale).to({x:1.5, y:1.5}, 10, Phaser.Easing.Bounce.Out, true);
             me.time.events.add(Phaser.Timer.SECOND *0.1, me.downSize2, this);
-            //Swap the two active tiles
             me.swapTiles();
-            //After the swap has occurred, check the grid for any matches
             me.game.time.events.add(500, function(){
                 me.checkMatch();
             });
         }
-    //Keep track of where the user originally clicked
         if(me.activeTile1 == null){
             me.activeTile1 = tile;
-            //console.log(tile);
             me.startPosX = (tile.x - me.tileWidth/2) / me.tileWidth;
             me.startPosY = (tile.y - me.tileHeight/2) / me.tileHeight;
             me.add.tween(me.activeTile1.scale).to({x:1.5, y:1.5}, 10, Phaser.Easing.Bounce.Out, true);
@@ -551,13 +458,10 @@ update: function(){
     me.game.camera.follow(me.centerPoint);
 
     if(me.powerBar.height == 373){
-        //me.score++;
         me.scoreText.text = '0  0  0  1';
     }
     
     if(me.gridTotal >= 26 && gridHasSaved){
-       // console.log("grid total " + me.gridTotal);
-        //console.log("switch gridhassaved");
         gridHasSaved = false;
     }
     
@@ -567,18 +471,15 @@ update: function(){
        
     var me = this;
       
-    //If there are two active tiles, swap their positions
     if(me.activeTile1 && me.activeTile2){
                          me.whooshSound.play();
 
         var tile1Pos = {x:(me.activeTile1.x - me.tileWidth / 2) / me.tileWidth, y:(me.activeTile1.y - me.tileHeight / 2) / me.tileHeight};
         var tile2Pos = {x:(me.activeTile2.x - me.tileWidth / 2) / me.tileWidth, y:(me.activeTile2.y - me.tileHeight / 2) / me.tileHeight};
  
-        //Swap them in our "theoretical" grid
         me.tileGrid[tile1Pos.x][tile1Pos.y] = me.activeTile2;
         me.tileGrid[tile2Pos.x][tile2Pos.y] = me.activeTile1;
  
-        //Actually move them on the screen
         me.game.add.tween(me.activeTile1).to({x:tile2Pos.x * me.tileWidth + (me.tileWidth/2), y:tile2Pos.y * me.tileHeight + (me.tileHeight/2)}, 200, Phaser.Easing.Linear.In, true);
         me.game.add.tween(me.activeTile2).to({x:tile1Pos.x * me.tileWidth + (me.tileWidth/2), y:tile1Pos.y * me.tileHeight + (me.tileHeight/2)}, 200, Phaser.Easing.Linear.In, true);
         
@@ -592,41 +493,28 @@ update: function(){
    checkMatch: function(){
        
     var me = this;
-    //Call the getMatches function to check for spots where there is
-    //a run of three or more tiles in a row
+
     var matches = me.getMatches(me.tileGrid);
  
-    //If there are matches, remove them
     if(matches.length > 0){
         
         
-        //remove them
-         //me.time.events.add(Phaser.Timer.SECOND * 0.8, me.removeTileGroup(matches), this);
-//        me.removeTileGroup(matches);
         me.game.time.events.add(80, function(){
            me.removeTileGroup(matches);
         });
  
-        //Move the tiles currently on the board into their new positions
-         //me.time.events.add(Phaser.Timer.SECOND * 0.8,  me.resetTile, this);
-//       me.resetTile();
          me.game.time.events.add(300, function(){
            me.resetTile();
         });
  
-        //Fill the board with new tiles wherever there is an empty spot
-        // me.time.events.add(Phaser.Timer.SECOND * 0.8, me.fillTile, this);
-        //me.fillTile();
         me.game.time.events.add(300, function(){
            me.fillTile();
         });
         
-        //Trigger the tileUp event to reset the active tiles
         me.game.time.events.add(500, function(){
             me.tileUp();
         });
  
-        //Check again to see if the repositioning of tiles caused any new matches
         me.game.time.events.add(600, function(){
             me.checkMatch();
         });
@@ -634,7 +522,6 @@ update: function(){
     }
     else {
 
-        //No match so just swap the tiles back to their original position and reset
         me.swapTiles();
         me.game.time.events.add(500, function(){
             me.tileUp();
@@ -649,7 +536,6 @@ update: function(){
        
     var me = this;
        
-  	//Reset the active tiles
     me.activeTile1 = null;
     me.activeTile2 = null;
       
@@ -659,7 +545,6 @@ update: function(){
     var matches = [];
     var groups = [];
  
-    //Check for horizontal matches
     for (var i = 0; i < tileGrid.length; i++)
     {
         var tempArr = tileGrid[i];
@@ -703,7 +588,6 @@ update: function(){
         if(groups.length > 0) matches.push(groups);
     }
  
-    //Check for vertical matches
     for (j = 0; j < tileGrid.length; j++)
     {
         var tempArr = tileGrid[j];
@@ -754,13 +638,11 @@ update: function(){
    getTilePos: function(tileGrid, tile){
 	var pos = {x:-1, y:-1};
  
-    //Find the position of a specific tile in the grid
     for(var i = 0; i < tileGrid.length ; i++)
     {
 
         for(var j = 0; j < tileGrid[i].length; j++)
         {
-            //There is a match at this position so return the grid coords
             if(tile == tileGrid[i][j])
             {
                 pos.x = i;
@@ -778,18 +660,14 @@ update: function(){
        
     var me = this;
        
-    //Loop through each column starting from the left
     for (var i = 0; i < me.tileGrid.length; i++)
     {
  
-        //Loop through each tile in column from bottom to top
         for (var j = me.tileGrid[i].length - 1; j > 0; j--)
         {
  
-            //If this space is blank, but the one above it is not, move the one above down
             if(me.tileGrid[i][j] == null && me.tileGrid[i][j-1] != null)
             {
-                //Move the tile above down one
                 var tempTile = me.tileGrid[i][j-1];
                 me.tileGrid[i][j] = tempTile;
                 me.tileGrid[i][j-1] = null;
@@ -801,10 +679,7 @@ update: function(){
                 me.fallDownTween.onComplete.add(function () {
                         me.dropSound.play();
                 });  
- 
-                //The positions have changed so start this process again from the bottom
-                //NOTE: This is not set to me.tileGrid[i].length - 1 because it will immediately be decremented as
-                //we are at the end of the loop.
+
                 j = me.tileGrid[i].length;
             }
         }
@@ -830,26 +705,21 @@ update: function(){
     var me = this;
 
      if(premadeBalls >= 0){
-    //Check for blank spaces in the grid and add new tiles at that position
     for(var i = 0; i < me.tileGrid.length; i++){
  
         for(var j = 0; j < me.tileGrid.length; j++){
  
             if (me.tileGrid[i][j] == null)
             {
-                //Found a blank spot so lets add animate a tile there
                 var tile = me.addTile(i, j);
-                //And also update our "theoretical" grid
                 me.tileGrid[i][j] = tile;
             }
  
         }
     }
    }
-      // console.log(premadeBalls);
-       console.log(finalBallNum);
+
     if(premadeBalls <= 0 && finalBallNum > 0){
-           // console.log("HEY");
 
         for(var i = 0; i < me.tileGrid.length; i++){
  
@@ -891,7 +761,6 @@ update: function(){
    removeTileGroup: function(matches){
        
     var me = this;
-    //Loop through all the matches and remove the associated tiles
     for(var i = 0; i < matches.length; i++){
         var tempArr = matches[i];
  
@@ -899,7 +768,6 @@ update: function(){
          me.sendSparkles();
 
             var tile = tempArr[j];
-            //Find where this tile lives in the theoretical grid
             var tilePos = me.getTilePos(me.tileGrid, tile);
             
             if(tile.key == 'bomb'){
@@ -908,7 +776,6 @@ update: function(){
  
             
             
-            //Remove the tile from the screen
            shrinkTween = me.add.tween(tile.scale).to({x:0.0, y:0.0}, 100, Phaser.Easing.Linear.None, true);
 
             
@@ -919,7 +786,6 @@ update: function(){
           });  
              premadeBalls--;
  
-            //Remove the tile from the theoretical grid
             if(tilePos.x != -1 && tilePos.y != -1){
                 me.tileGrid[tilePos.x][tilePos.y] = null;
             }

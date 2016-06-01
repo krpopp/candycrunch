@@ -73,10 +73,6 @@ SmashSpace.LevelThree.prototype = {
         }
     },
     
-    //flipSwitch function
-    //when the switch is flipped
-    
-    //tell function in LevelTwo to run 
     
     sendAway: function(){
         var levelThree = this;
@@ -102,7 +98,6 @@ SmashSpace.LevelThree.prototype = {
         if(levelThree.stopCreate){
             levelThree.belt.animations.stop('move');
             saveInt(levelThree.tileInt);
-            //console.log(levelThree.tileInt);
             levelThree.tile.destroy();
             levelThree.hasCreated = false;
             levelThree.stopCreate = false;
