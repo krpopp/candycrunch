@@ -24,9 +24,6 @@ SmashSpace.LevelOne = function(game){
 
 SmashSpace.LevelOne.prototype = {
 
-//var pipeScript = this;
-
-//var hasCreated = false;
  
     create: function() {
       
@@ -86,7 +83,6 @@ SmashSpace.LevelOne.prototype = {
         
         var switcher = levelOne.add.button(650, 0, 'switch', levelOne.goAway, this, 2, 0, 1);
  
-    //Declare assets that will be used as tilesTopOne
         levelOne.tileTypeTopOne = [
             'red',
             'green',
@@ -95,18 +91,14 @@ SmashSpace.LevelOne.prototype = {
         ];
  
  
-    //Keep track of the tilesTopOne the user is trying to swap (if any)
         levelOne.activeTile1TopOne = null;
         levelOne.activeTile2TopOne = null;
  
-    //Controls whether the player can make a move or not
         levelOne.canMoveTopOne = false;
  
-    //Grab the weigh and height of the tilesTopOne (assumes same size for all tilesTopOne)
         levelOne.tileWidthTopOne = levelOne.game.cache.getImage('blue').width/1.1;
         levelOne.tileHeightTopOne = levelOne.game.cache.getImage('blue').height;
  
-    //This will hold all of the tile sprites
         levelOne.tilesTopOne = levelOne.game.add.group();
         
         levelOne.tileXPos = [2, 3, 4, 5, 4.5, 3.5, 2.5, 1.5, 1.5, 2.5, 3.5, 4.5, 5.5, 5.5, 4.5, 3.5, 2.5, 1.5, 1.5, 2.5, 3.5, 4.5, 5.5];
@@ -114,7 +106,6 @@ SmashSpace.LevelOne.prototype = {
         
         levelOne.allTiles = game.add.group();
  
-    //Create a random data generator to use later
         var seedTopeOne = Date.now();
         levelOne.random = new Phaser.RandomDataGenerator([seedTopeOne]);
 
@@ -122,8 +113,6 @@ SmashSpace.LevelOne.prototype = {
             levelOne.initTileTopOne();
         }
 
-    //hasCreated = true;
-    //  }
         
          levelOne.centerPoint = levelOne.add.sprite(265, 200, null);
         levelOne.centerPoint.renderable = false;
@@ -133,17 +122,12 @@ SmashSpace.LevelOne.prototype = {
 
   },
     
-    //add a candy function
-    //calls when switch is pulled in LevelTwo
-    
     
     goAway: function(){
         var levelOne = this;
         levelOne.switchSound.play();
         for(var i = 0; i < levelOne.gridballs; i++){
-//            var tempArr = i;
-//        //Loop through each position in a specific column, starting from the top
-//            for(var j = 0; j < levelOne.gridballs; j++){
+
             finalBallNum++;
             var colorInt;
             if(levelOne.allTiles.children[i].tileTypeTopOne == 'red'){
@@ -158,15 +142,12 @@ SmashSpace.LevelOne.prototype = {
             if(levelOne.allTiles.children[i].tileTypeTopOne == 'yellow'){
                 colorInt = 3;
             }
-           console.log(colorInt);
    
             localStorage.setItem('finishedTile' + finalBallNum, JSON.stringify(colorInt));
             var justMade = JSON.parse(localStorage.getItem('myTile' + finalBallNum));
             delete(justMade);
-//            var tile = tempArr[j];
             levelOne.add.tween(levelOne.allTiles.children[i]).to( { y: 700 }, 4000, Phaser.Easing.Linear.Out, true);
             levelOne.finishedBalls--;
-           // ballsInt--;
             levelOne.belt1.animations.play('move', 20, true);
             levelOne.shake.shake(20, levelOne.belt1);
             levelOne.game.time.events.add(200, function(){
@@ -228,32 +209,17 @@ SmashSpace.LevelOne.prototype = {
             });  
             }
             levelOne.beltSound.play();
-            ballsInt = 0;
-
-    
-        
-        
-         //   levelOne.finishedBalls = 0;
-        //    myInt = 0;
-          //  finalBallNum = 0;
-
-        
+            ballsInt = 0;      
     },
     
     deleteTiles: function(){
         var levelOne = this;
         
            for(var i = 0; i < levelOne.gridballs; i++){
-//            var tempArr = i;
-//        //Loop through each position in a specific column, starting from the top
-//            for(var j = 0; j < levelOne.gridballs; j++){
-//            var tile = tempArr[j];
+
              levelOne.allTiles.children[i].destroy();
             }
         
-       
-       // levelOne.initTileTopOne();
-
     },
     
     
@@ -275,15 +241,11 @@ SmashSpace.LevelOne.prototype = {
     
     var levelOne = this;
        
-        //Loop through each column in the grid
         for(var i = 1; i <= ballsInt; i++){
-            console.log("num of balls " + levelOne.finishedBalls);
             var tile = levelOne.addTileTopOne(levelOne.tileXPos[i], levelOne.tileYPos[i]);
-            console.log("tile is " + tile);
  
     }
  
-    //Once the tilesTopOne are ready, check for any matches on the grid
     levelOne.game.time.events.add(600, function(){
         levelOne.checkMatchTopOne();
     });
@@ -292,38 +254,21 @@ SmashSpace.LevelOne.prototype = {
     addTileTopOne: function (x, y){
  
         var levelOne = this;
-       // for(var i = 0; i < levelOne.finishedBalls;i++){  
-            //console.log("K is " + levelOne.forInt);
+
             levelOne.savedTile = JSON.parse(localStorage.getItem('myTile' + levelOne.finishedBalls));
-            //console.log("my tile is " + JSON.parse(localStorage.getItem('myTile' + levelOne.finishedBalls)));
             levelOne.finishedBalls--;
-            //console.log("now there are " + levelOne.finishedBalls + "balls");
-       // }
-        //if(levelOne.savedTile == null){
-//        tileToAdd = levelOne.tileTypeTopOne[levelOne.random.integerInRange(0, levelOne.tileTypeTopOne.length - 1)]; 
-        //} else {
+
         var tileToAdd = levelOne.tileTypeTopOne[levelOne.savedTile];
-        //}
-        
-    //Choose a random tile to add
-    //var tileToAdd = levelOne.tileTypeTopOne[levelOne.random.integerInRange(0, levelOne.tileTypeTopOne.length - 1)]; 
- 
-    //Add the tile at the correct x position, but add it to the top of the game (so we can slide it in)
+
         var tile = levelOne.tilesTopOne.create(0, (y * levelOne.tileHeightTopOne) + levelOne.tileHeightTopOne / 2, tileToAdd);
-        console.log(tile.position.y);
-    //Animate the tile into the correct vertical position
         levelOne.game.add.tween(tile).to({x:x*levelOne.tileWidthTopOne+(levelOne.tileWidthTopOne/2)}, 500, Phaser.Easing.Linear.In, true)
  
-    //Set the tilesTopOne anchor point to the center
         tile.anchor.setTo(0.5, 0.5);
  
-    //Enable input on the tile
         tile.inputEnabled = true;
  
-    //Keep track of the type of tile that was added
         tile.tileTypeTopOne = tileToAdd;
  
-    //Trigger the tileDownTopOne function whenever the user clicks or taps on this tile
         tile.events.onInputDown.add(levelOne.tileDownTopOne, levelOne);
         
         levelOne.allTiles.add(tile);
@@ -336,19 +281,13 @@ SmashSpace.LevelOne.prototype = {
     
   arrageTiles: function(aTile){
       var levelOne = this;
-  //    levelOne.world.bringToTop(levelOne.backGround);
       for(var i = 0; i <= levelOne.allTiles; i++){
-      //levelOne.world.sendToBack(levelOne.allTiles.childrin[i]);
       }
   },
 
   tileDownTopOne: function(tile, pointer){
       
         var levelOne = this;
-      
-        //console.log(tile);
-        //console.log("tileDownTopOne ran");
-    //Keep track of where the user originally clicked
         if(levelOne.canMoveTopOne){
             levelOne.activeTile1TopOne = tile;
             levelOne.startPosX = (tile.x - levelOne.tileWidthTopOne/2) / levelOne.tileWidthTopOne;
@@ -362,40 +301,27 @@ SmashSpace.LevelOne.prototype = {
 
     var levelOne = this;
 
-    //The user is currently dragging from a tile, so let's see if they have dragged
-    //over the top of an adjacent tile
     if(levelOne.activeTile1TopOne && !levelOne.activeTile2TopOne){
  
-        //Get the location of where the pointer is currently
         var hoverX = levelOne.game.input.x-265;
         var hoverY = levelOne.game.input.y-200;
  
-        //Figure out what position on the grid that translates to
         var hoverPosX = Math.floor(hoverX/levelOne.tileWidthTopOne);
         var hoverPosY = Math.floor(hoverY/levelOne.tileHeightTopOne);
  
-        //See if the user had dragged over to another position on the grid
         var difX = (hoverPosX - levelOne.startPosX);
         var difY = (hoverPosY - levelOne.startPosY);
  
-        //Make sure we are within the bounds of the grid
         if(!(hoverPosY > levelOne.tileGridTopOne[0].length - 1 || hoverPosY < 0) && !(hoverPosX > levelOne.tileGridTopOne.length - 1 || hoverPosX < 0)){
-        console.log("x:" + hoverX);
-        console.log("y" + hoverY);
-            //If the user has dragged an entire tilesTopOne width or height in the x or y direction
-            //trigger a tile swap
+
             if((Math.abs(difY) == 1 && difX == 0) || (Math.abs(difX) == 1 && difY ==0)){
  
-                //Prevent the player from making more moves whilst checking is in progress
                 levelOne.canMoveTopOne = false;
  
-                //Set the second active tile (the one where the user dragged to)
                 levelOne.activeTile2TopOne = levelOne.tileGridTopOne[hoverPosX][hoverPosY];
  
-                //Swap the two active tilesTopOne
                 levelOne.swaptilesTopOne();
  
-                //After the swap has occurred, check the grid for any matches
                 levelOne.game.time.events.add(500, function(){
                     levelOne.checkMatchTopOne();
                 });
@@ -414,17 +340,14 @@ SmashSpace.LevelOne.prototype = {
       
     var levelOne = this;
       
-    //If there are two active tilesTopOne, swap their positions
     if(levelOne.activeTile1TopOne && levelOne.activeTile2TopOne){
  
         var tile1Pos = {x:(levelOne.activeTile1TopOne.x - levelOne.tileWidthTopOne / 2) / levelOne.tileWidthTopOne, y:(levelOne.activeTile1TopOne.y - levelOne.tileHeightTopOne / 2) / levelOne.tileHeightTopOne};
         var tile2Pos = {x:(levelOne.activeTile2TopOne.x - levelOne.tileWidthTopOne / 2) / levelOne.tileWidthTopOne, y:(levelOne.activeTile2TopOne.y - levelOne.tileHeightTopOne / 2) / levelOne.tileHeightTopOne};
  
-        //Swap them in our "theoretical" grid
         levelOne.tileGridTopOne[tile1Pos.x][tile1Pos.y] = levelOne.activeTile2TopOne;
         levelOne.tileGridTopOne[tile2Pos.x][tile2Pos.y] = levelOne.activeTile1TopOne;
  
-        //Actually move them on the screen
         levelOne.add.tween(levelOne.activeTile1TopOne).to({x:tile2Pos.x * levelOne.tileWidthTopOne + (levelOne.tileWidthTopOne/2), y:tile2Pos.y * levelOne.tileHeightTopOne + (levelOne.tileHeightTopOne/2)}, 200, Phaser.Easing.Linear.In, true);
         levelOne.add.tween(levelOne.activeTile2TopOne).to({x:tile1Pos.x * levelOne.tileWidthTopOne + (levelOne.tileWidthTopOne/2), y:tile1Pos.y * levelOne.tileHeightTopOne + (levelOne.tileHeightTopOne/2)}, 200, Phaser.Easing.Linear.In, true);
  
@@ -452,7 +375,6 @@ SmashSpace.LevelOne.prototype = {
       
     var levelOne = this;
       
-  	//Reset the active tilesTopOne
       levelOne.activeTile1TopOne = null;
         levelOne.activeTile2TopOne = null;
   }

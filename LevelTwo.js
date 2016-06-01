@@ -44,12 +44,10 @@ SmashSpace.LevelTwo.prototype = {
         if(!visitedL2){
             levelTwo.coloredBalls = 0;
         }
-        //console.log(myInt);
     
         levelTwo.blankBalls = myInt;
         
         levelTwo.backGround = levelTwo.add.sprite(0, 0, 'l2BG');
-        //var pipes = levelTwo.add.sprite(0, 0, 'l2pipes');
         
         levelTwo.l2colorPipe = levelTwo.add.sprite(0, 0, 'l2colorPipe');
         levelTwo.l2bigPipe = levelTwo.add.sprite(0, 0, 'l2bigPipe');
@@ -73,7 +71,6 @@ SmashSpace.LevelTwo.prototype = {
         
          
  
-    // levelTwo.levels = levelTwo.add.button(350, 600, 'levels', levelTwo.menuSels, this, 2, 0, 1);
         picker.add(levelTwo.redPicker, levelTwo.greenPicker, levelTwo.bluePicker, levelTwo.yellowPicker);
         
         levelTwo.tileType = [
@@ -87,34 +84,20 @@ SmashSpace.LevelTwo.prototype = {
         var seed = Date.now();
         random = new Phaser.RandomDataGenerator([seed]);
     
-      //Choose a random tile to add
         var tileToAdd = levelTwo.tileType[random.integerInRange(4, levelTwo.tileType.length - 1)]; 
  
-        //var tileToAdd = levelTwo.add.sprite(350, 300, 'blankBall');
         
-    //Add the tile at the correct x position, but add it to the top of the game (so we can slide it in)
         if(myInt > 0){
             levelTwo.tile = levelTwo.tiles.create(-200, 0, tileToAdd);
         }
                  
           levelTwo.belt = levelTwo.add.sprite(470, 550, 'horiBelt');
-//        levelTwo.belt.anchor.setTo(.5, 1);
-//        levelTwo.belt.scale.x = -1;
+
           var move = levelTwo.belt.animations.add('move');
-        
-//        var bigPipe = levelTwo.add.sprite(10, 550, 'bigPipe');
-//        bigPipe.anchor.setTo(.5, 1);
-//        bigPipe.scale.x = -1;
-//        var anotherPipe = levelTwo.add.sprite(500, 300, 'bigPipe');
+
         
         var switcher = levelTwo.add.button(900, 70, 'switch', levelTwo.beginAgain, this, 2, 0, 1);
-        
-//        var two = levelTwo.add.sprite(510, 200, 'two');
-//        var one = levelTwo.add.sprite(100, 200, 'one');
 
-        
-
-   
         levelTwo.redPicker.inputEnabled = true;
         levelTwo.redPicker.input.priorityID = 1;
         levelTwo.redPicker.input.useHandCursor = true;
@@ -157,13 +140,7 @@ SmashSpace.LevelTwo.prototype = {
         
     },
     
-    //create ball function
-    //calls when LevelOne Switch is flipped
-    
-    //send colored ball function
-    //when switch is flipped
-    //add a colored ball to an array in LevelOne
-    //and called a function to add it to the array
+
     
     stopAll: function(){
         var levelTwo = this;
@@ -291,18 +268,11 @@ SmashSpace.LevelTwo.prototype = {
        
         var levelTwo = this;
         levelTwo.squirt.play();
-//    tiles.remove(tile);
-//    var tileToAdd = tileType[0];
-//    tile = tiles.create(game.width/2, game.height/2, tileToAdd);
-//    tile.inputEnabled = true;
-//    tile.input.priorityID = 1;
-//    tile.input.useHandCursor = true;
-//    tile.events.onInputDown.add(changeColor, this);
+
         if(levelTwo.newColor != null){
         
         levelTwo.tile.key = levelTwo.newColor;
         levelTwo.tile.loadTexture(levelTwo.newColor, 0);
-        //levelTwo.time.events.add(Phaser.Timer.SECOND * 4, levelTwo.beginAgain, this);
         }
       
     },
@@ -332,9 +302,7 @@ SmashSpace.LevelTwo.prototype = {
         levelTwo.blankBalls--;
         levelTwo.time.events.add(Phaser.Timer.SECOND, levelTwo.nowStop, this);
         levelTwo.coloredBalls++;
-        //console.log(levelTwo.coloredBalls);
         localStorage.setItem('myTile' + levelTwo.coloredBalls, JSON.stringify(levelTwo.colorInt));
-        //console.log(JSON.parse(localStorage.getItem('myTile' + levelTwo.coloredBalls)));
         levelTwo.tile = null;
         levelTwo.beltSound.play();
          }
