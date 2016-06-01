@@ -33,7 +33,7 @@ SmashSpace.GroundFloor.prototype = {
     var me = this;
         
         
-        
+    
     me.shake = new Phaser.Plugin.Shake(me);
     game.plugins.add(me.shake);    
         
@@ -74,6 +74,7 @@ SmashSpace.GroundFloor.prototype = {
     me.emptyGrid = me.add.sprite(-30, -18, 'emptyGrid');
     me.emptyBar = me.add.sprite(-218, 42, 'emptyBar');
     me.powerBar = me.add.sprite(-166, 435, 'powerBar');
+    me.sign = me.add.sprite(590, 250, 'sign');
     me.door = me.add.sprite(590, 310, 'door'); 
     me.UIbottom = me.add.sprite(-315, 465, 'UIbottom');
     me.pauseButt = me.add.button(-240, 470, 'button', me.pause, this, 1, 0, 2);
@@ -131,7 +132,11 @@ SmashSpace.GroundFloor.prototype = {
     var seed = Date.now();
     me.random = new Phaser.RandomDataGenerator([seed]);
 
-    me.initFirstTiles();
+    if(!gridHasSaved){
+        me.initFirstTiles();
+    } else if(gridHasSaved){
+        me.initTiles();
+    }
 
         
     me.centerPoint = me.add.sprite(185, 220, null);

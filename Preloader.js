@@ -87,6 +87,7 @@ SmashSpace.Preloader.prototype = {
         this.load.image('topBar', 'assets/image/topBar.png');
         this.load.spritesheet('button', 'assets/image/button.png', 243, 103);
         this.load.image('scoreBack', 'assets/image/scoreBack.png');
+        this.load.image('sign', 'assets/image/sign.png');
         
         this.load.image('pause', 'assets/image/pause.png');
         this.load.image('tut', 'assets/image/how.png');
