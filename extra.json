@@ -1,0 +1,60 @@
+{"frames": [
+
+{
+	"filename": "aqua1.png",
+	"frame": {"x":0,"y":0,"w":500,"h":295},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":500,"h":295},
+	"sourceSize": {"w":500,"h":295}
+},
+{
+	"filename": "aqua2.png",
+	"frame": {"x":500,"y":0,"w":411,"h":296},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":411,"h":296},
+	"sourceSize": {"w":411,"h":296}
+},
+{
+	"filename": "aqua3.png",
+	"frame": {"x":911,"y":0,"w":309,"h":295},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":309,"h":295},
+	"sourceSize": {"w":309,"h":295}
+},
+{
+	"filename": "clothes.png",
+	"frame": {"x":1220,"y":0,"w":50,"h":49},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":50,"h":49},
+	"sourceSize": {"w":50,"h":49}
+},
+{
+	"filename": "clothes2.png",
+	"frame": {"x":1270,"y":0,"w":61,"h":64},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":61,"h":64},
+	"sourceSize": {"w":61,"h":64}
+},
+{
+	"filename": "dark.png",
+	"frame": {"x":1331,"y":0,"w":500,"h":291},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":500,"h":291},
+	"sourceSize": {"w":500,"h":291}
+}],
+"meta": {
+	"app": "https://www.codeandweb.com/texturepacker",
+	"version": "1.0",
+	"image": "extra.png",
+	"format": "RGBA8888",
+	"size": {"w":1831,"h":296},
+	"scale": "1",
+	"smartupdate": "$TexturePacker:SmartUpdate:cfdca4013b772a67e21c01ed1832fc2c:0245f546d5a7e90499c79ba47eed3148:f85f537cb1fc8ff2c0d178475a4110cb$"
+}
+}
